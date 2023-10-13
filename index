@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Generator</title>
+</head>
+<body>
+    <h1>Image Generator</h1>
+    <div class="input-section">
+        <label for="prompt">Enter Prompt:</label>
+        <textarea id="prompt" rows="5" cols="40"></textarea>
+    </div>
+    <div class="input-section">
+        <label for="saveAs">Save As:</label>
+        <input type="text" id="saveAs">
+    </div>
+    <button id="generateButton">Generate Image</button>
+    <p>
+        <a href="https://github.com/Dalabad/stable-diffusion-prompt-templates" target="_blank">Stable Diffusion Prompts</a>
+    </p>
+
+    <script>
+        // Add an event listener to the Generate Image button
+        document.getElementById("generateButton").addEventListener("click", function () {
+            const prompt = document.getElementById("prompt").value;
+            const savePath = document.getElementById("saveAs").value;
+
+            // Use the Fetch API to send data to your server-side code
+            fetch("/generate-image", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ prompt, savePath }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Handle the response, e.g., display the generated image
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</body>
+</html>
